@@ -1,0 +1,50 @@
+125. Valid Palindrome
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+
+        // ''''''''''''''''''''''mycode''''''''''''''''''''''''''''''''
+        // Complexity
+        // Time complexity:O(n)
+        // Space complexity:O(n)
+
+
+        string new_str;
+        for (int i = 0; i < s.size(); i++) {
+            if (isalnum(s[i]))
+                new_str += tolower(s[i]);
+        }
+        string rev = new_str;
+        reverse(rev.begin(), rev.end());
+        if (new_str == rev)
+            return true;
+        else
+            return false;
+
+        // ...................Optimize code.............................
+        // Complexity
+        // Time complexity:O(n)
+        // Space complexity:O(n)
+
+        int start = 0;
+        int end = s.size() - 1;
+        while (start <= end) {
+            if (!isalnum(s[start])) {
+                start++;
+                continue;
+            }
+            if (!isalnum(s[end])) {
+                end--;
+                continue;
+            }
+            if (tolower(s[start]) != tolower(s[end]))
+                return false;
+            else {
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
+};
