@@ -1,0 +1,50 @@
+//.....................................1910. Remove All Occurrences of a Substring ...................................
+
+
+class Solution {
+public:
+    void remove_string(string& s, string& part) { // ek case solve
+        int found = s.find(part);
+        if (found != string ::npos) {
+            // part string have been allocated
+            // remove it
+            string left_string = s.substr(0, found);
+            string right_string = s.substr(found + part.size(), s.size());
+            s = left_string + right_string;
+        }
+
+        else {
+            // base case
+            // all the occurence of the part has been removed.
+            return;
+        }
+
+        // RR
+        remove_string(s, part);
+    }
+
+    string removeOccurrences(string s, string part) {
+        //......method 1 start........
+        // int pos , n=  s.size();
+        // for (int i = 0; i <n; i++) {
+        //     pos = s.find(part);
+        //     if (pos != string::npos) {
+        //         s.erase(pos, part.size());
+        //     }
+        // }
+        //......method 1 end........
+
+        // better sol.
+        //......method 2 start........
+        //  while (s.length() > 0 && s.find(part) != string::npos) {
+        //      s.erase(s.find(part), part.size());
+        //  }
+        //  return s;
+        //......method 2 end........
+
+        //......method 3 (recuesive relation) start........
+
+        remove_string(s, part);
+        return s;
+    }
+};
