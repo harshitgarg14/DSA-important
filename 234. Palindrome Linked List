@@ -1,0 +1,64 @@
+//..............................234. Palindrome Linked List..................................
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode * reverse(ListNode * head){
+        ListNode * prev = NULL;
+        ListNode * curr = head;
+        while(curr != NULL){
+            ListNode * forward = curr->next;
+            curr->next = prev;
+            prev = curr;  
+            curr = forward;
+        }
+        return prev;
+    }
+    bool isPalindrome(ListNode* head) {
+        //empty LL
+        if(head == NULL) {
+            return true;
+        }
+        //SINGLE node
+        if(head ->next == NULL) return true;
+
+        // >1 node in LL
+        //step 1- Middle element.
+
+        ListNode * slow = head;
+        ListNode * fast = head->next;
+        while(fast != NULL){
+            fast =fast->next;
+            if(fast != NULL){
+                fast = fast->next;
+                slow = slow->next;
+            }
+        }
+        //slow pointer pointing the middle node of a LL.
+
+        //step -2 - reverse LL after middle node.
+
+        ListNode * reverseLLKaHead = reverse(slow->next);
+        slow->next = reverseLLKaHead;
+
+        //step 3 -start comparing both halves.
+
+        ListNode * temp1 = head;
+        ListNode * temp2 = reverseLLKaHead;
+        while(temp2 != NULL){
+            if(temp1 ->val != temp2->val) return false;
+            temp1 =temp1 ->next;
+            temp2 =temp2 ->next;
+        }
+        return true;
+    }
+};
