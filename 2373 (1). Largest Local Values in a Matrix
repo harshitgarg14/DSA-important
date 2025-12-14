@@ -1,0 +1,60 @@
+2373. Largest Local Values in a Matrix
+
+//my approach
+
+class Solution {
+public:
+    
+    int max_subgrid_element(vector<vector<int>>* grid, int startrow,
+                            int startcolumn){
+        int temp = INT_MIN;
+
+        for (int i = startrow; i < startrow + 3; i++) {
+            for (int j = startcolumn; j < startcolumn + 3; j++) {
+                temp = max(temp, (*grid)[i][j]);
+            }
+        }
+        return temp;
+    }
+    vector<vector<int>> largestLocal(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<vector<int>> maxLocal(n-2 , vector<int>(n-2));
+        for (int i = 0; i < n - 2; i++) {
+            for (int j = 0; j < n - 2; j++) {
+                maxLocal[i][j] =
+                    max_subgrid_element(&grid, i, j);
+                
+            }
+        }
+        return maxLocal;
+    }
+};
+
+
+//second approach 
+
+class Solution {
+public:
+    vector<vector<int>> largestLocal(vector<vector<int>>& grid) {
+        vector<vector<int>> res;
+        vector<int> tmp;
+        for (int i=0; i<grid.size()-2; ++i) {
+            for (int j=0; j<grid[i].size()-2; ++j) {
+                int maxm=INT_MIN;
+                maxm = max(grid[i][j], maxm);
+                maxm = max(grid[i][j+1], maxm);
+                maxm = max(grid[i][j+2], maxm);
+                maxm = max(grid[i+1][j], maxm);
+                maxm = max(grid[i+1][j+1], maxm);
+                maxm = max(grid[i+1][j+2], maxm);
+                maxm = max(grid[i+2][j], maxm);
+                maxm = max(grid[i+2][j+1], maxm);
+                maxm = max(grid[i+2][j+2], maxm);
+                tmp.push_back(maxm);
+            }
+            res.push_back(tmp);
+            tmp.clear();
+        }
+        return res;
+    }
+};
