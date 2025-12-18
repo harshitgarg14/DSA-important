@@ -1,0 +1,31 @@
+539. Minimum Time Difference
+
+//concept in Question notebook and main notebook also
+
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        vector<int> minute_vec;
+        for (int i = 0; i < timePoints.size(); i++) {
+            string curr_time = timePoints[i];
+            // stoi is used to convert the string into integer.
+            int hour = stoi(curr_time.substr(0, 2));
+            int minute = stoi(curr_time.substr(3, 2));
+            int total_minutes = hour * 60 + minute;
+            minute_vec.push_back(total_minutes);
+        }
+        sort(minute_vec.begin(), minute_vec.end());
+        // finding adjacent diff and then minimum of it .
+        int minimum = INT_MAX;
+        for (int i = 0; i < timePoints.size() - 1; i++) {
+            minimum = min(minimum, (minute_vec[i + 1] - minute_vec[i]));
+        }
+        // last difference.......(EDGE case)..........
+        //here covering both cases .
+        int lastdiff1 = minute_vec[minute_vec.size()-1] - minute_vec[0];
+        int lastdiff2 = (minute_vec[0] + 1440) - (minute_vec[minute_vec.size() - 1]);
+        int lastdiff = min(lastdiff1 ,lastdiff2);
+        minimum = min(minimum, lastdiff);
+        return minimum;
+    }
+};
