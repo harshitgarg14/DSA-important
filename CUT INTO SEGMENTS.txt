@@ -1,0 +1,36 @@
+
+
+//...............CUT INTO SEGMENTS .......................
+// how many maximum no. of segments you can make provided that each segment is of length x , y , z (given).
+
+#include<iostream>
+#include<limits.h>
+using namespace std;
+
+int cut_into_segment(int n , int x ,int y , int z ){
+    //base case 
+    if(n ==0) return 0;
+
+    if(n <0) return INT_MIN;
+
+    int ans1 = cut_into_segment(n-x , x , y , z )+1;
+    int ans2 = cut_into_segment(n-y , x , y , z )+1;
+    int ans3 = cut_into_segment(n-z , x , y , z )+1;
+
+    return max(ans1 , max(ans2,ans3));
+}
+
+int main(){
+    
+    int n = 11;
+    int x = 5;
+    int y = 2;
+    int z = 2;
+
+    int max_segment = cut_into_segment(n , x ,y ,z );
+
+    if(max_segment < 0) max_segment = 0;
+    cout<<"maximum no. of segments :  "<<max_segment<<endl;
+
+
+}
